@@ -1,0 +1,4 @@
+*/.bundle/*
+*/box/*
+*/packer_cache/*
+*/Vagrantfile
