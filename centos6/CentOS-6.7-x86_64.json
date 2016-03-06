@@ -1,0 +1,59 @@
+{
+  "variables": {
+	"user": "vagrant",
+	"password": "vagrant",
+	"disk_size": "100000"
+  },
+
+  "builders": [
+    {
+      "type": "qemu",
+	  "format": "qcow2",
+	  "accelerator": "kvm",
+	  "disk_size": "{{user `disk_size`}}",
+
+      "iso_url": "http://mirror.switch.ch/ftp/mirror/centos/6.7/isos/x86_64/CentOS-6.7-x86_64-netinstall.iso",
+      "iso_checksum": "411da8c3f66839eef9ae47bf4515cc0b82f2a1dfc7b2d5bde2d203ca7e3220f3",
+      "iso_checksum_type": "sha256",
+
+      "http_directory": "http",
+
+      "ssh_username": "{{user `user`}}",
+      "ssh_password": "{{user `password`}}",
+      "ssh_wait_timeout": "10m",
+
+	  "boot_wait": "2s",
+      "boot_command": [
+        "<tab> text ks=http://192.168.122.2:{{ .HTTPPort }}/ks.cfg<enter><wait>"
+      ],
+
+	  "qemuargs": [
+		[
+		  "-netdev",
+		  "user,id=user.0,hostfwd=tcp::3213-:22,net=192.168.122.0/24"
+	    ]
+	  ]
+    }
+  ],
+
+  "provisioners": [
+    {
+      "type": "shell",
+      "execute_command": "sudo {{.Vars}} sh {{.Path}}",
+      "scripts": [
+        "scripts/update.sh",
+        "scripts/vagrant.sh",
+        "scripts/cleanup.sh",
+        "scripts/zerodisk.sh"
+      ]
+    }
+  ],
+
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "output": "box/CentOS-6.7-x86_64-{{.Provider}}.box",
+	  "keep_input_artifact": false
+    }
+  ]
+}
