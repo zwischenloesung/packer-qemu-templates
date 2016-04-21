@@ -6,7 +6,7 @@
 ## Provided templates
 
 * `CentOS-7-1511-x86_64.json`: Minimal vanilla CentOS 7.2 (1511) installation with a multi-partition setup using LVM
-* `Debian-Jessie-8.2-x86_64`: Minimal vanilla Debian Jessie 8.2 installation with a multi-partition setup using LVM
+* `Debian-Jessie-8.4-x86_64`: Minimal vanilla Debian Jessie 8.4 installation with a multi-partition setup using LVM
 
 ## Building a box 
 
