@@ -13,8 +13,8 @@
 	  "accelerator": "kvm",
 	  "disk_size": "{{user `disk_size`}}",
 
-      "iso_url": "{{user `debian_mirror`}}/8.4.0/amd64/iso-cd/debian-8.4.0-amd64-netinst.iso",
-      "iso_checksum": "7a6b418e6a4ee3ca75dda04d79ed96c9e2c33bb0c703ca7e40c6374ab4590748",
+      "iso_url": "{{user `debian_mirror`}}/8.5.0/amd64/iso-cd/debian-8.5.0-amd64-netinst.iso",
+      "iso_checksum": "ad4e8c27c561ad8248d5ebc1d36eb172f884057bfeb2c22ead823f59fa8c3dff",
       "iso_checksum_type": "sha256",
 
       "http_directory": "http",
@@ -61,7 +61,7 @@
   "post-processors": [
     {
       "type": "vagrant",
-      "output": "box/Debian-Jessie-8.4-x86_64-{{.Provider}}.box",
+      "output": "box/Debian-Jessie-8.5-x86_64-{{.Provider}}.box",
 	  "keep_input_artifact": false
     }
   ]
