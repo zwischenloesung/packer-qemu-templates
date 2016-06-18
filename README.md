@@ -1,5 +1,7 @@
 # Packer QEMU Templates
 
+[![Travis CI](http://img.shields.io/travis/ganto/packer-qemu-templates.svg?style=flat)](http://travis-ci.org/ganto/packer-qemu-templates)
+
 [Packer](https://www.packer.io/) template files for building boxes which can be run by [Vagrant](https://www.vagrantup.com/) using the [vagrant-libvirt](https://github.com/pradels/vagrant-libvirt). provider. 
 
 
