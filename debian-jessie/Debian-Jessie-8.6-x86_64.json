@@ -3,7 +3,8 @@
 	"user": "vagrant",
 	"password": "vagrant",
 	"disk_size": "100000",
-	"debian_mirror": "http://mirror.switch.ch/ftp/mirror/debian-cd"
+	"debian_mirror": "http://mirror.switch.ch/ftp/mirror/debian-cd",
+	"debian_version": "8.6.0"
   },
 
   "builders": [
@@ -13,7 +14,7 @@
 	  "accelerator": "kvm",
 	  "disk_size": "{{user `disk_size`}}",
 
-      "iso_url": "{{user `debian_mirror`}}/8.6.0/amd64/iso-cd/debian-8.6.0-amd64-netinst.iso",
+      "iso_url": "{{user `debian_mirror`}}/{{user `debian_version`}}/amd64/iso-cd/debian-{{user `debian_version`}}-amd64-netinst.iso",
       "iso_checksum": "9479c5c2df72ae3878116c43fb42eefae53d1fe363ce514a6afc8289064b9f5f",
       "iso_checksum_type": "sha256",
 
@@ -61,7 +62,7 @@
   "post-processors": [
     {
       "type": "vagrant",
-      "output": "box/Debian-Jessie-8.5-x86_64-{{.Provider}}.box",
+      "output": "box/Debian-Jessie-{{user `debian_version`}}-x86_64-{{.Provider}}.box",
 	  "keep_input_artifact": false
     }
   ]
