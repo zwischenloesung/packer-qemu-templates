@@ -1,0 +1,68 @@
+{
+  "variables": {
+	"user": "vagrant",
+	"password": "vagrant",
+	"disk_size": "100000",
+	"debian_mirror": "http://mirror.switch.ch/ftp/mirror/debian-cd"
+  },
+
+  "builders": [
+    {
+      "type": "qemu",
+	  "format": "qcow2",
+	  "accelerator": "kvm",
+	  "disk_size": "{{user `disk_size`}}",
+
+      "iso_url": "{{user `debian_mirror`}}/8.6.0/amd64/iso-cd/debian-8.6.0-amd64-netinst.iso",
+      "iso_checksum": "9479c5c2df72ae3878116c43fb42eefae53d1fe363ce514a6afc8289064b9f5f",
+      "iso_checksum_type": "sha256",
+
+      "http_directory": "http",
+
+      "ssh_username": "{{user `user`}}",
+      "ssh_password": "{{user `password`}}",
+      "ssh_wait_timeout": "20m",
+
+	  "boot_wait": "2s",
+      "boot_command": [
+		"<esc><wait>",
+		"install <wait>",
+		"preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg <wait>",
+		"debian-installer=en_US <wait>",
+		"auto <wait>",
+		"locale=en_US <wait>",
+		"kdb-chooser/method=us <wait>",
+		"netcfg/get_hostname={{ .Name }} <wait>",
+		"netcfg/get_domain=vagrantup.com <wait>",
+		"fb=false <wait>",
+		"debconf/frontend=noninteractive <wait>",
+		"console-setup/ask_detect=false <wait>",
+		"console-keymaps-at/keymap=us <wait>",
+		"keyboard-configuration/xkb-keymap=us <wait>",
+		"<enter><wait>"
+      ]
+    }
+  ],
+
+  "provisioners": [
+    {
+      "type": "shell",
+      "execute_command": "echo 'vagrant'|sudo -S sh '{{.Path}}'",
+      "scripts": [
+		"scripts/grub.sh",
+        "scripts/update.sh",
+        "scripts/vagrant.sh",
+        "scripts/cleanup.sh",
+		"scripts/zerodisk.sh"
+      ]
+    }
+  ],
+
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "output": "box/Debian-Jessie-8.5-x86_64-{{.Provider}}.box",
+	  "keep_input_artifact": false
+    }
+  ]
+}
